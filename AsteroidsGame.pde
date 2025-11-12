@@ -31,8 +31,8 @@ void putData() {
 void setup() {
   //prevTime = System.currentTimeMillis();
   size(600, 600);
-  System.out.println(displayWidth);
-  System.out.println(displayHeight);
+  // System.out.println(displayWidth);
+  // System.out.println(displayHeight);
   ship = new Ship();
   stars = new Star[100];
   for (int i = 0; i < stars.length; i++) {
