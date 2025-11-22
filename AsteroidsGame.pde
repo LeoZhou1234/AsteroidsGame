@@ -1,23 +1,12 @@
 Ship ship;
+ArrayList<Asteroid> asteroids;
 Star[] stars;
 boolean accelerating = false;
 boolean turningLeft = false;
 boolean turningRight = false;
 boolean hyperjump = false;
-//float minFPS = 60;
-//long prevTime;
 
 void putData() {
-  //if (System.currentTimeMillis() > prevTime + 1000) {
-  //  //if (frameRate < minFPS) {
-  //  //  prevTime = System.currentTimeMillis();
-  //  //  minFPS = 60;
-  //  //  minFPS = min(frameRate, minFPS);
-  //  //}
-  //  prevTime = System.currentTimeMillis();
-  //  //minFPS = 60;
-  //  minFPS = min(frameRate, minFPS);
-  //}
   textSize(10);
   text("px: " + ship.getMyCenterX(), 5, 10);
   text("py: " + ship.getMyCenterY(), 5, 20);
@@ -25,31 +14,53 @@ void putData() {
   text("vy: " + ship.getMyYspeed(), 5, 40);
   text("dir: " + (ship.getMyPointDirection()%360), 5, 50);
   text("fps: " + frameRate, 5, 60);
-  //text("1% low: " + minFPS, 5, 70);
 }
 
 void setup() {
-  //prevTime = System.currentTimeMillis();
   size(600, 600);
-  // System.out.println(displayWidth);
-  // System.out.println(displayHeight);
   ship = new Ship();
+  asteroids = new ArrayList<Asteroid>();
   stars = new Star[100];
+  
   for (int i = 0; i < stars.length; i++) {
     stars[i] = new Star();
+  }
+  
+  for (int i = 0; i < 10; i++) {
+    asteroids.add(new Asteroid());
   }
 }
 
 void draw() {
   double turnspeed = (hyperjump ? 1 : 5);
+  
   if (accelerating) ship.accelerate(0.1);
   if (turningRight) ship.turn(-turnspeed);
   if (turningLeft) ship.turn(turnspeed);
+  //if (asteroids.size() < 10) asteroids.add(new Asteroid()); //MAKE ASTEROIDS SPAWN AT EDGE OF SCREEN
+  
   if (!hyperjump) {
     background(0);
+    
     for (int i = 0; i < stars.length; i++) {
       stars[i].show();
     }
+    
+    for (int i = 0; i < asteroids.size(); i++) {
+      asteroids.get(i).move();
+      asteroids.get(i).show();
+      
+      float avgRadius = (float)asteroids.get(i).getAvgRadius();
+      float sx = (float)ship.getMyCenterX();
+      float sy = (float)ship.getMyCenterY();
+      float ax = (float)asteroids.get(i).getMyCenterX();
+      float ay = (float)asteroids.get(i).getMyCenterY();
+      if (dist(sx, sy, ax, ay) <= avgRadius + 7.5) {
+        asteroids.remove(i);
+        i--;
+      }
+    }
+    
     ship.move();
     ship.show(accelerating);
     putData();
@@ -57,6 +68,7 @@ void draw() {
     fill(0, 0, 0, 75);
     rect(0, 0, width, height);
   }
+  
 }
 
 void keyPressed() {
