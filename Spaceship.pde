@@ -17,16 +17,16 @@ class Ship extends Floater {
     myPointDirection = -90;
   }
   
-  public double random(double lowerBound, double upperBound) {
+  public double randomDouble(double lowerBound, double upperBound) {
     return (Math.random()*(upperBound-lowerBound)) + lowerBound;
   }
   
   public void hyperjump() {
     myXspeed = 0;
     myYspeed = 0;
-    myPointDirection = random(0, 360);
-    myCenterX = random(0, width);
-    myCenterY = random(0, height);
+    myPointDirection = randomDouble(0, 360);
+    myCenterX = randomDouble(0, width);
+    myCenterY = randomDouble(0, height);
   }
   
  public void show(boolean accelerating) { //Draws the floater at the current position  
@@ -49,7 +49,6 @@ class Ship extends Floater {
   }
   endShape(CLOSE);
   
- 
   if (accelerating) {
     fill(255, 255, 0);
     stroke(255, 0, 0);
