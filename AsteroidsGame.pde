@@ -150,7 +150,7 @@ void keyPressed() {
   else if (key == 'd' || keyCode == RIGHT) {
     turningLeft = true;
   }
-  else if (key == 'q') {
+  else if (key == ' ') {
     if (ammo == 0) ammo--;
     if (!shootCooldown && ammo > 0) {
       bullets.add(new Bullet(ship));
@@ -176,7 +176,7 @@ void keyReleased() {
   else if (key == 'd' || keyCode == RIGHT) {
     turningLeft = false;
   }
-  else if (key == 'q') {
+  else if (key == ' ') {
     shootCooldown = false;
   }
   else if (key == 'f') {
