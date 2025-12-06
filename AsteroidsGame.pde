@@ -59,7 +59,7 @@ void setup() {
 void draw() {
   if (started) {
     if (winState == null) {
-      if (health == 0 || (ammo < 0 && asteroids.size() != 0)) {
+      if (health <= 0 || (ammo < 0 && asteroids.size() != 0)) {
         winState = false;
         ammo = 0;
       }
